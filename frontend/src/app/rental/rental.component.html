@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DVDs and Tapes Inventory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="/" class="navbar-brand">
+                <i class="fas fa-film me-3 fs-4"></i>
+                <span class="fa-regular fa-clapperboard-play">VIDEO-KÖLCSÖNZŐ</span>
+            </a>  
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#my-nav" aria-controls="my-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div id="my-nav" class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto" style="font-size: larger;">
+                    <li class="nav-item active">
+                        <a class="nav-link" routerLink="/home"><i class="fas fa-home me-1"></i> FŐOLDAL</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="upper-card mt-6">
+        <div class="row">
+            <div class="col-md-4 mb-9">
+                <div class="card" style="width: 22rem;">
+                    <img class="card-img-top" src="assets/kep_3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h4 class="card-title">Ügyfelek</h4>
+                        <div class="d-flex align-items-center mb-3">
+                            <select class="form-select me-2 flex-grow-1" [(ngModel)]="selectedCustomerId" (change)="loadCustomerDetails()">
+                                <option value="">Válasszon ügyfelet...</option>
+                                <option *ngFor="let customer of customers" [value]="customer._id">{{ customer.name }}</option>
+                            </select>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 custom-table-container">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 class="blue-background p-3 fs-2">Ügyfél adatai:</h5>
+                                <div *ngIf="selectedCustomer">
+                                    <p><strong>Név:</strong> {{ selectedCustomer.name }}</p>
+                                    <p><strong>Telefonszám:</strong> {{ selectedCustomer.phone }}</p>
+                                    <p><strong>Azonosító:</strong> {{ selectedCustomer.idNumber }}</p>
+                                    <p><strong>Cím:</strong> {{ selectedCustomer.address }}</p>
+                                    <p><strong>Státusz:</strong> {{ selectedCustomer.status }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <h5 class="p-3 fs-2">Kölcsönzések:</h5>
+                                <table class="table table-striped mt-3" *ngIf="rentals && rentals.length > 0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Azonositó</th>
+                                            <th scope="col">Film</th>
+                                            <th scope="col">Kölcsönzési Dátum</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rental of rentals">
+                                            <td>{{ rental.product.serialNumber }}</td> 
+                                            <td>{{ rental.product.title }}</td> 
+                                            <td>{{ rental.rentalDate }}</td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                <p *ngIf="!rentals || rentals.length === 0">Nincsenek kölcsönzések.</p>
+                            </div>
+                                </div>
+                                    </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="card-title mt-5"><i class="fas fa-compact-disc" style="margin-right: 0.7rem;"></i>Film/DVD lista</h2>
+                            <div class="lower-card">
+                                <div *ngFor="let product of filteredProducts" class="card" style="width: 18rem;" [ngClass]="{'inactive-card': product.status !== 'available'}">
+                                    <div class="card-body" [attr.disabled]="product.status !== 'available' ? true : null">
+                                        <img class="card-img-top" src="/assets/kep_1.jpg" alt="Card image cap">
+                                        <h4 class="card-title">{{ product.title }}</h4>
+                                        <p class="card-text"><strong>Aquisition date:</strong> {{ product.aquisitionDate }}</p>
+                                        <p class="card-text"><strong>Serial Number:</strong> {{ product.serialNumber }}</p>
+                                        <p class="card-text"><strong>Status:</strong> {{ product.status }}</p>
+                                        <a href="#" class="btn btn-primary" 
+                                            (click)="selectProduct(product, $event)" 
+                                            [class.disabled]="product.status !== 'available'" 
+                                            [attr.aria-disabled]="product.status !== 'available'">
+                                            {{ isSelected(product) ? 'Törlés' : 'Kiválaszt' }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+    <div class="rent-button">
+        <div class="mt-3 d-flex justify-content-center">
+            <button class="btn btn-success" (click)="openRentModal()">Kölcsönzés</button>
+        </div>
+    </div>
+  
+    <div class="modal fade" id="rentModal" tabindex="-1" aria-labelledby="rentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="rentModalLabel">Kölcsönzés</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div *ngIf="selectedCustomer">
+                        <p><strong>Név:</strong> {{ selectedCustomer.name }}</p>
+                    </div>
+                    <ul class="list-group">
+                        <li *ngFor="let product of selectedProducts" class="list-group-item">
+                            <p><strong>Film:</strong> {{ product.title }}</p>
+                            <p><strong>Kiadási év:</strong> {{ product.aquisitionDate }}</p>
+                            <p><strong>Azonositó:</strong> {{ product.serialNumber }}</p>
+                        </li>
+                    </ul>
+                </div>
+                
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bezárás</button>
+                    <button type="button" class="btn btn-primary" (click)="rentProduct()">Kölcsönzés</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.0.2/datatables.min.js"></script>
+</body>
+</html>

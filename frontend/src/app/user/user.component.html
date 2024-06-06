@@ -1,0 +1,98 @@
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Bejelentkezés és Regisztráció </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <body>
+  <div class="top-bar" *ngIf="message">
+    <p>{{ message }}</p>
+  </div>
+<div class="container">
+  <input type="checkbox" id="flip">
+  <div class="cover">
+    <div class="front">
+      <img src="assets/kep_1.png" alt="">
+      <div class="text">
+        <span class="text-1">Videó kölcsönző</span>
+      </div>
+    </div>
+  </div>
+  <div class="forms">
+    <div class="form-content">
+      <div class="login-form">
+        <div class="title">Bejelentkezés</div>
+        <form [formGroup]="loginForm" (ngSubmit)="login()">
+          <div class="input-boxes">
+            <div class="input-box" [ngClass]="{'has-error': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+              <i class="fas fa-envelope"></i>
+              <input type="text" placeholder="Add meg az email címed" formControlName="email">
+              <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+                <small *ngIf="loginForm.get('email')?.hasError('required')">Az email cím megadása kötelező.</small>
+              </div>
+            </div>
+            <div class="input-box" [ngClass]="{'has-error': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Add meg a jelszavad" formControlName="password">
+              <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <small *ngIf="loginForm.get('password')?.hasError('required')">A jelszó megadása kötelező.</small>
+              </div>
+            </div>
+            <div class="text"><a href="#">Elfelejtette jelszavát?</a></div>
+            <div class="button input-box">
+              <input type="submit" value="Küldés" [disabled]="loginForm.invalid">
+            </div>
+            <div class="text sign-up-text">Még nincs fiókja?<label for="flip">Regisztrálj most</label></div>
+          </div>
+        </form>
+      </div>
+   <div class="signup-form">
+      <div class="title">Regisztráció</div>
+        <form [formGroup]="registrationForm" (ngSubmit)="register()">
+          <div class="input-boxes">
+            <div class="input-box" [ngClass]="{'has-error': registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched}">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Add meg a keresztneved" formControlName="firstName">
+              <div *ngIf="registrationForm.get('firstName')?.invalid && registrationForm.get('firstName')?.touched">
+                <small *ngIf="registrationForm.get('firstName')?.hasError('required')">A név megadása kötelező.</small>
+                <small *ngIf="registrationForm.get('firstName')?.hasError('minlength')">A névnek legalább 2 karakter hosszúnak kell lennie.</small>
+              </div>
+            </div>
+            <div class="input-box" [ngClass]="{'has-error': registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched}">
+              <i class="fas fa-user"></i>
+              <input type="text" placeholder="Add meg a vezetékneved" formControlName="lastName">
+              <div *ngIf="registrationForm.get('lastName')?.invalid && registrationForm.get('lastName')?.touched">
+                <small *ngIf="registrationForm.get('lastName')?.hasError('required')">A vezetékneved megadása kötelező.</small>
+                <small *ngIf="registrationForm.get('lastName')?.hasError('minlength')">A vezetéknevednek legalább 2 karakter hosszúnak kell lennie.</small>
+              </div>
+            </div>
+            <div class="input-box" [ngClass]="{'has-error': registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched}">
+              <i class="fas fa-envelope"></i>
+              <input type="text" placeholder="Add meg az email címed" formControlName="email">
+              <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched">
+                <small *ngIf="registrationForm.get('email')?.hasError('required')">Az email cím megadása kötelező.</small>
+                <small *ngIf="registrationForm.get('email')?.hasError('email')">Az email cím formátuma érvénytelen.</small>
+              </div>
+            </div>
+            <div class="input-box" [ngClass]="{'has-error': registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched}">
+              <i class="fas fa-lock"></i>
+              <input type="password" placeholder="Add meg a jelszavad" formControlName="password">
+              <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched">
+                <small *ngIf="registrationForm.get('password')?.hasError('required')">A jelszó megadása kötelező.</small>
+                <small *ngIf="registrationForm.get('password')?.hasError('minlength')">A jelszónak legalább 6 karakter hosszúnak kell lennie.</small>
+              </div>
+            </div>
+            <div class="button input-box">
+              <input type="submit" value="Küldés" [disabled]="registrationForm.invalid">
+            </div>
+            <div class="text sign-up-text">Nincs még fiókod?<label for="flip">Bejelentkezés most</label></div>
+          </div>
+        </form>
+      </div>  
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

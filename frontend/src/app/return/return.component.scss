@@ -1,0 +1,129 @@
+body {
+    background-color: rgb(216, 216, 143);
+    height: 270lvh;
+}
+.navbar-nav .nav-link {
+    font-size: 18px; 
+}
+.navbar-brand span {
+    font-size: 18px; 
+    
+}
+.navbar-brand {
+    margin-right: 40px; 
+    margin-left: 40px; 
+}
+.upper-card {
+   margin-top: 3%;
+   margin-left: 3%;   
+}
+
+.lower-card {
+    margin-top: 7%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 37px; 
+    gap: 5.5%; 
+}
+.card {
+    margin-bottom: 3rem;
+}
+
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col-custom {
+    flex: 0 0 auto;
+
+}
+.custom-table-container {
+    position: absolute;
+    top: 15%;
+    right:2%;
+    padding: 2px;
+    width: 70%;
+}
+.card-title {
+    text-align: center; 
+    margin-bottom: 5%; 
+    background-color: darkgray;
+}
+h4.card-title {
+    font-size:1.2rem;
+    text-align: center;
+    background-color: darkgray;
+    margin-top: 5%;
+    margin-left: 0;
+    margin-right: 0;
+ 
+}
+.btn-second{
+    margin-left: 20%; 
+}
+.selected {
+    background-color: lightblue; 
+}
+.custom-btn {
+    width: 50%; 
+    text-align: center;
+    margin: 0 auto; 
+}
+
+.rent-button button {
+    background-color:rgb(219, 210, 210); 
+    color: black;
+    width: 20%; 
+    border-color: black;
+    max-height: 3rem;
+    margin-top: auto;
+}
+
+.inactive-card {
+    background-color: #f2f2f2; 
+    opacity: 0.5; 
+    pointer-events: none; 
+}
+
+* {
+    font-family: sans-serif;
+}
+
+.content-table {
+    max-width: 100%;
+    width: 95%;
+    border-collapse: collapse;
+    margin-left: 2.7rem ;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    background-color: #ffffff;
+    color: #090909;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}

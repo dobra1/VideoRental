@@ -1,0 +1,55 @@
+body {
+    background-color: rgb(216, 216, 143);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+.navbar-nav .nav-link {
+    font-size: 18px; 
+}
+.navbar-brand span {
+    font-size: 18px; 
+}
+.navbar-brand {
+    margin-right: 40px; 
+    margin-left: 40px; 
+}
+* {
+    font-family: sans-serif;
+}
+
+.content-table {
+    max-width: 100%;
+    width: 97%;
+    border-collapse: collapse;
+    margin: 20px ;
+    font-size: 0.9em;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.content-table thead tr {
+    background-color: #ffffff;
+    color: #090909;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td {
+    padding: 12px 15px;
+}
+
+.content-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.content-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
